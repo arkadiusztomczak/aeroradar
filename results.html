@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="flights.js"></script>
+    <script src="https://kit.fontawesome.com/d8277f85d9.js" crossorigin="anonymous"></script>
+    <meta charset="utf-8" />
+    <style>
+        .element {
+            margin: 50px;
+            border-radius: 5px;
+            background: #CDDC39;
+        }
+
+        .title {
+            font-size: 30px;
+            color: white;
+        }
+
+        .desc {
+            padding-left: 30px;
+            color: white;
+        }
+
+        .collection-item .desc {
+            color: black;
+        }
+
+        body {
+            background: url(bg.jpg);
+            background-repeat: no-repeat;
+            background-color: #f6f6f6;
+            background-position: bottom right;
+            height: 100%;
+            background-attachment: fixed;
+        }
+
+        .black .desc {
+            color: white;
+            text-align: center;
+        }
+
+        .iata {
+            background: #26a69a;
+            color: white;
+            padding: 3px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .route {
+            background-color: #607D8B;
+            margin-top: 25px;
+        }
+
+        .lotLeft {
+            float: left;
+            color: white;
+            height: 100%;
+            visibility: hidden;
+        }
+
+            .lotLeft .text, .country .name {
+                transform: rotate(-90deg);
+            }
+
+        .career {
+            padding: 2px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+            .career.Ryanair {
+                background: #1565C0;
+                color: yellow;
+            }
+
+            .career.Wizzair {
+                background: #EF9A9A;
+                color: #673AB7;
+            }
+
+        .conn {
+            padding: 20px;
+            margin-left: 40px;
+            background: #B3E5FC;
+        }
+
+        .country {
+            float: left;
+            height: 100%;
+        }
+
+        .header {
+            height: 60px;
+        }
+
+        .lHead {
+            float: left;
+        }
+
+        .price {
+            float: right;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .destination {
+            text-transform: uppercase;
+            font-size: 42px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .term {
+            margin-top: -10px;
+        }
+
+        .fas {
+            width: 22px;
+            text-align: center;
+        }
+    </style>
+    <script>
+
+        function datediff(first, second) {
+            var date1 = new Date(first);
+            var date2 = new Date(second);
+            var res = (date2.getTime() - date1.getTime()) / 86400000;
+            res = res.toFixed(0);
+            if (res == 1) return res + " dzień";
+            else return res + " dni";
+        }
+
+        function timediff(first, second) {
+            var date1 = new Date(first);
+            var date2 = new Date(second);
+            var h = (date2.getTime() - date1.getTime()) / 3600000;
+            var hours = parseInt(h);
+            h -= hours;
+            var mins = h * 60;
+            mins = parseInt(mins);
+
+            var word = "godzin";
+            if (hours == 1) word = "godzina";
+            else if (hours < 5) word = "godziny";
+            if (mins == 0) return hours + " " + word;
+            else return hours + " " + word + " " + mins + " minut";
+        }
+
+        function showDate(date, time=true) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+            hour = d.getHours();
+            mins = d.getMinutes();
+            monthw = month;
+            switch (month) {
+                case '1': monthw = 'stycznia'; break;
+                case '2': monthw = 'lutego'; break;
+                case '3': monthw = 'marca'; break;
+                case '4': monthw = 'kwietnia'; break;
+                case '5': monthw = 'maja'; break;
+                case '6': monthw = 'czerwca'; break;
+                case '7': monthw = 'lipca'; break;
+                case '8': monthw = 'sierpnia'; break;
+                case '9': monthw = 'września'; break;
+                case '10': monthw = 'października'; break;
+                case '11': monthw = 'listopada'; break;
+                case '12': monthw = 'grudnia'; break;
+                default: monthw = 'err'; break;
+            }
+            if (mins == '0') mins = '00';
+            else if (parseInt(mins) < 10) mins = '0' + mins;
+            if(time) return day + " " + monthw + " " + hour + ":" + mins;
+            else return day + " " + monthw;
+        }
+
+        function showTime(date) {
+            var d = new Date(date),
+            hour = d.getHours();
+            mins = d.getMinutes();
+
+            if (mins == '0') mins = '00';
+            else if (parseInt(mins) < 10) mins = '0' + mins;
+            return hour + ":" + mins;
+        }
+
+        function printRoute(o, it) {
+            var stage = 0;
+            var prevArriveTime = 0;
+            var prevArriveAirport = "";
+            var prevDepDate = "";
+
+            var result = ""
+
+            //$(".e" + it + " .conn").append('<div class="route"><div class="lotLeft"><div class="text">Lot tam</div></div><div class="collection oneWay">');
+            result ='<div class="route"><div class="lotLeft"><div class="text">Lot tam</div></div><div class="collection oneWay">';
+
+            o.forEach(function (segment, i) {
+                stage++;
+                if (stage > 1) {
+                    result += '<a class="collection-item"><div class="desc"><strong> <i class="fas fa-info"></i> Czas na przesiadkę:</strong> ' + timediff(prevArriveTime, segment.departure) + '</div></a >';
+                }
+                if (prevDepDate != showDate(segment.departure, false)) {
+                    prevDepDate = showDate(segment.departure, false);
+                    result += '<a class="collection-item white"> <strong style="color:black"><i class="far fa-calendar-alt"></i> ' + prevDepDate+'</strong> </a>';
+                }
+                if (stage > 1 && (prevArriveAirport != segment.departureFrom)) result += '<a class="collection-item"> <div class="desc"> <strong><i class="fas fa-exclamation-circle"></i> Transfer między lotniskami (nie jest wliczony w cenę)</strong> </div> </a>';
+
+                prevArriveTime = segment.arrival;
+                prevArriveAirport = segment.arriveTo;
+                result +='<a class="collection-item "><span class="badge segmentPrice">' + segment.price + ' PLN</span>'
+                    + '<i class="fas fa-plane-departure"></i>' + showTime(segment.departure) + ' ' + segment.departureFrom + ' <span class="iata">' + segment.departureFrom + '</span><br>'
+                    + '<i class="fas fa-plane-arrival"></i>' + showTime(segment.arrival) + ' ' + segment.arriveTo + ' <span class="iata">' + segment.arriveTo + '</span>'
+                    + '<div class="desc"><div class="flNumber"><span class="career ' + segment.carrier + '">' + segment.carrier + '</span> ' + segment.flight + '</div></div>';
+
+            });
+            $(".e" + it + " .conn").append(result);
+        }
+
+        $(document).ready(function () {
+            //var h = $('.route').height();
+            $('.lotLeft').css('visibility', 'visible');
+            /*$('.lotLeft').css('margin-top', (h / 2 - 10));
+            h = $('.element').height();
+            $('.country').css('margin-top', (h / 2 - 10));*/
+
+            var it = 0;
+            flights.flights.forEach(function (element, index) {
+                it++;
+                $("body").append('<div class="element e' + it + '"><div class= "country"><div class="name">' + '' + '</div></div>'
+                    + '<div class="conn"> <div class="header"><div class="lHead"><div class="destination">' + element.destination + '</div><div class= "term" > <i class="far fa-calendar-alt"></i> ' + showDate(element.beginDate) + ' - ' + showDate(element.endDate) + ' (' + datediff(element.beginDate, element.endDate) + ')</div></div><div class="price">' + element.price + ' PLN</div></div>');
+                printRoute(element.route, it);
+                printRoute(element.return, it);
+            })
+        });
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
