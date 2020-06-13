@@ -1,0 +1,175 @@
+{{
+  "outboundFlights": [
+    {
+      "departureStation": "WAW",
+      "arrivalStation": "VIE",
+      "carrierCode": "W6",
+      "flightNumber": "1343",
+      "flightSellKey": "W6~1343~ ~~WAW~07/16/2020 13:55~VIE~07/16/2020 15:20~",
+      "departureDateTime": "2020-07-16T13:55:00",
+      "arrivalDateTime": "2020-07-16T15:20:00",
+      "fares": [
+    {
+          "fareSellKey": "0~ZW~~ZWZZC~WZZC~~3~X",
+          "administrationFeePrice": {
+            "amount": 37.0,
+            "currencyCode": "PLN"
+          },
+          "basePrice": {
+            "amount": 332.9,
+            "currencyCode": "PLN"
+          },
+          "discountedPrice": {
+            "amount": 333.0,
+            "currencyCode": "PLN"
+          },
+          "fullBasePrice": {
+            "amount": 482.0,
+            "currencyCode": "PLN"
+          },
+          "discountedFarePrice": {
+            "amount": 2.0,
+            "currencyCode": "PLN"
+          },
+          "discountedPriceWithoutFamilyDiscount": {
+            "amount": 333.0,
+            "currencyCode": "PLN"
+          },
+          "flightChangeFeePrice": {
+            "code": null,
+            "amount": 0.0,
+            "currencyCode": "PLN"
+          },
+          "fareLockPrice": {
+            "amount": 32.0,
+            "currencyCode": "PLN"
+          },
+          "flightPriceDetail": {
+            "discountRate": 0.0,
+            "discountPrice": {
+              "amount": 0.1,
+              "currencyCode": "PLN"
+            },
+            "price": {
+              "amount": 295.9,
+              "currencyCode": "PLN"
+            },
+            "fees": [
+              {
+                "included": false,
+                "specificType": "administration",
+                "displayCount": 1,
+                "price": {
+                  "amount": 37.0,
+                  "currencyCode": "PLN"
+                },
+                "promotedPrice": null,
+                "order": 0,
+                "code": "ADM"
+              }
+            ],
+            "displayCount": 1,
+            "total": {
+              "amount": 333.0,
+              "currencyCode": "PLN"
+            }
+          },
+          "passengerFlightPriceDetails": null,
+          "bundle": "plus",
+          "fareDiscountType": "none",
+          "wdc": true,
+          "availableCount": 6,
+          "distributionFeePrice": {
+            "amount": 0.0,
+            "currencyCode": "PLN"
+          },
+          "isFamily": false,
+          "soldOut": false,
+          "groupAdministrationFeePrice": {
+            "amount": 0.0,
+            "currencyCode": "PLN"
+          }
+        }
+      ],
+      "infantLimitExceeded": {
+        "limitExceeded": false,
+        "isBlocking": true
+      },
+      "wheelchairLimitExceeded": {
+        "unavailableCount": 0,
+        "limitExceeded": false,
+        "isBlocking": false
+      },
+      "oxyLimitExceeded": {
+        "limitExceeded": false,
+        "isBlocking": true
+      },
+      "sportsEquipmentLimitExceeded": {
+        "unavailableCount": 0,
+        "limitExceeded": false,
+        "isBlocking": false
+      },
+      "autoCheckInLimitExceeded": {
+        "unavailableCount": 0,
+        "limitExceeded": false,
+        "isBlocking": false
+      },
+      "isRequest": false,
+      "isLease": false,
+      "duration": "01:25:00"
+    }
+  ],
+  "returnFlights": null,
+  "outboundBundles": [
+    {
+      "code": "basic",
+      "ancillaryServices": [
+        "bundle-ancillary-carry-on-bag",
+        "bundle-ancillary-2-day-check-in-window"
+      ],
+      "fareLockFeeCode": "FLBS"
+    },
+    {
+      "code": "middle",
+      "ancillaryServices": [
+        "bundle-ancillary-carry-on-bag",
+        "bundle-ancillary-trolley-bag",
+        "bundle-ancillary-ultralight-checked-in-baggage",
+        "bundle-ancillary-seat-selection",
+        "bundle-ancillary-priority-boarding",
+        "bundle-ancillary-priority-check-in",
+        "bundle-ancillary-30-day-check-in-window",
+        "bundle-ancillary-airport-check-in"
+      ],
+      "fareLockFeeCode": "FLGO"
+    },
+    {
+      "code": "plus",
+      "ancillaryServices": [
+        "bundle-ancillary-carry-on-bag",
+        "bundle-ancillary-trolley-bag",
+        "bundle-ancillary-heavy-checked-in-baggage",
+        "bundle-ancillary-seat-selection",
+        "bundle-ancillary-priority-boarding",
+        "bundle-ancillary-priority-check-in",
+        "bundle-ancillary-wizz-flex",
+        "bundle-ancillary-30-day-check-in-window",
+        "bundle-ancillary-airport-check-in",
+        "bundle-ancillary-flightinformation",
+        "bundle-ancillary-wizz-account-refund",
+        "bundle-ancillary-auto-check-in"
+      ],
+      "fareLockFeeCode": "FLPL"
+    }
+  ],
+  "returnBundles": null,
+  "currencyCode": "PLN",
+  "arrivalStationCurrencyCode": "EUR",
+  "isDomestic": false,
+  "isGroup": false,
+  "discountType": "none",
+  "discountPercentage": 0.0,
+  "bookingCurrencyRenewalPrice": null,
+  "var99": true,
+  "featureTogglesChanged": true
+}}

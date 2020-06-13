@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="flights.js"></script>
+    <link rel="stylesheet" href="uikit.css" />
+
+    <!-- UIkit JS -->
+
     <script src="https://kit.fontawesome.com/d8277f85d9.js" crossorigin="anonymous"></script>
     <meta charset="utf-8" />
     <style>
@@ -32,12 +36,14 @@
         }
 
         body {
-            background: url(bg.jpg);
-            background-repeat: no-repeat;
-            background-color: #f6f6f6;
-            background-position: bottom right;
-            height: 100%;
-            background-attachment: fixed;
+            background: url(bg.jpg) !important;
+            background-repeat: no-repeat !important;
+            background-color: #f6f6f6 !important;
+            background-position: bottom right !important;
+            height: 100% !important;
+            background-attachment: fixed !important;
+            user-select: none;
+            pointer-events: none;
         }
 
         .black .desc {
@@ -73,6 +79,7 @@
             padding: 2px;
             border-radius: 4px;
             font-size: 13px;
+            font-weight: bold;
         }
 
             .career.Ryanair {
@@ -83,6 +90,11 @@
             .career.Wizzair {
                 background: #EF9A9A;
                 color: #673AB7;
+            }
+
+            .career.Transavia {
+                color: #01D66C;
+                border: 1px solid #00d66c;
             }
 
         .conn {
@@ -128,13 +140,18 @@
     </style>
     <script>
 
+        
         function datediff(first, second) {
             var date1 = new Date(first);
             var date2 = new Date(second);
-            var res = (date2.getTime() - date1.getTime()) / 86400000;
+            var res = (date2.getTime() - date1.getTime()) / 60000;
             res = res.toFixed(0);
-            if (res == 1) return res + " dzień";
-            else return res + " dni";
+
+            var hours = Math.floor(res / 60);
+            var mins = res % 60;
+
+            if (hours == 0) return mins + " min.";
+            return hours + " godz. " + mins + " min.";
         }
 
         function timediff(first, second) {
@@ -153,7 +170,7 @@
             else return hours + " " + word + " " + mins + " minut";
         }
 
-        function showDate(date, time=true) {
+        function showDate(date, time = true) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
@@ -178,13 +195,13 @@
             }
             if (mins == '0') mins = '00';
             else if (parseInt(mins) < 10) mins = '0' + mins;
-            if(time) return day + " " + monthw + " " + hour + ":" + mins;
+            if (time) return day + " " + monthw + " " + hour + ":" + mins;
             else return day + " " + monthw;
         }
 
         function showTime(date) {
             var d = new Date(date),
-            hour = d.getHours();
+                hour = d.getHours();
             mins = d.getMinutes();
 
             if (mins == '0') mins = '00';
@@ -201,7 +218,7 @@
             var result = ""
 
             //$(".e" + it + " .conn").append('<div class="route"><div class="lotLeft"><div class="text">Lot tam</div></div><div class="collection oneWay">');
-            result ='<div class="route"><div class="lotLeft"><div class="text">Lot tam</div></div><div class="collection oneWay">';
+            result = '<div class="route"><div class="lotLeft"><div class="text">Lot tam</div></div><div class="collection oneWay">';
 
             o.forEach(function (segment, i) {
                 stage++;
@@ -210,22 +227,22 @@
                 }
                 if (prevDepDate != showDate(segment.departure, false)) {
                     prevDepDate = showDate(segment.departure, false);
-                    result += '<a class="collection-item white"> <strong style="color:black"><i class="far fa-calendar-alt"></i> ' + prevDepDate+'</strong> </a>';
+                    result += '<a class="collection-item white"> <strong style="color:black"><i class="far fa-calendar-alt"></i> ' + prevDepDate + '</strong> </a>';
                 }
                 if (stage > 1 && (prevArriveAirport != segment.departureFrom)) result += '<a class="collection-item"> <div class="desc"> <strong><i class="fas fa-exclamation-circle"></i> Transfer między lotniskami (nie jest wliczony w cenę)</strong> </div> </a>';
 
                 prevArriveTime = segment.arrival;
                 prevArriveAirport = segment.arriveTo;
-                result +='<a class="collection-item "><span class="badge segmentPrice">' + segment.price + ' PLN</span>'
-                    + '<i class="fas fa-plane-departure"></i>' + showTime(segment.departure) + ' ' + segment.departureFrom + ' <span class="iata">' + segment.departureFrom + '</span><br>'
-                    + '<i class="fas fa-plane-arrival"></i>' + showTime(segment.arrival) + ' ' + segment.arriveTo + ' <span class="iata">' + segment.arriveTo + '</span>'
-                    + '<div class="desc"><div class="flNumber"><span class="career ' + segment.carrier + '">' + segment.carrier + '</span> ' + segment.flight + '</div></div>';
+                result += '<a class="collection-item "><span class="badge segmentPrice">' + segment.price + ' PLN</span>'
+                    + '<i class="fas fa-plane-departure"></i>' + showTime(segment.departure) + ' ' + segment.departureFrom + ' <span class="iata">' + segment.departureFromCode + '</span><br>'
+                    + '<i class="fas fa-plane-arrival"></i>' + showTime(segment.arrival) + ' ' + segment.arriveTo + ' <span class="iata">' + segment.arriveToCode + '</span>'
+                    + '<div class="desc"><div class="flNumber"><span class="career ' + segment.carrier + '">' + segment.carrier + '<span> ' + segment.flight + '</div></div>';
 
             });
             $(".e" + it + " .conn").append(result);
         }
 
-        $(document).ready(function () {
+        function printFromFile() {
             //var h = $('.route').height();
             $('.lotLeft').css('visibility', 'visible');
             /*$('.lotLeft').css('margin-top', (h / 2 - 10));
@@ -238,16 +255,54 @@
                 $("body").append('<div class="element e' + it + '"><div class= "country"><div class="name">' + '' + '</div></div>'
                     + '<div class="conn"> <div class="header"><div class="lHead"><div class="destination">' + element.destination + '</div><div class= "term" > <i class="far fa-calendar-alt"></i> ' + showDate(element.beginDate) + ' - ' + showDate(element.endDate) + ' (' + datediff(element.beginDate, element.endDate) + ')</div></div><div class="price">' + element.price + ' PLN</div></div>');
                 printRoute(element.route, it);
-                printRoute(element.return, it);
+                //printRoute(element.return, it);
             })
-        });
+        };
 
+        var printed = 0;
+        var refresher = setInterval(refreshProgress, 1000);
+
+        function refreshProgress() {
+            console.log(printed);
+            $.getScript("progress.js");
+            if (p <= m) {
+                $('.uk-container').html('<div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center"><h3 class= "uk-card-title">Wyszukiwanie lotów...</h3><p>Trwa przetwarzanie danych linii ' + a + '...</p><progress class="uk-progress" value="' + p + '" max="' + m + '"></progress></div >');
+                //console.log('<div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center"><h3 class= "uk-card-title">Wyszukiwanie lotów...</h3><p>Trwa przetwarzanie danych linii ' + a + '...</p><progress class="uk-progress" value="' + p + '" max="' + m + '"></progress></div >');
+            }
+            else {
+                if (printed == 0) {
+                    $('.uk-container').hide();
+                    clearInterval(refresher);
+
+                    $.each(i, function (index, value) {
+                        $("body").append('<div class="uk-alert-danger uk-alert" style="background:#F44336;color:white"><p>' + value + '</p></div>');
+                    });
+                   
+                    $.getScript("flights.js").done(function (script, textStatus) {
+                        printFromFile();
+                    });
+                   
+                    
+                    
+                    
+                }
+                printed = 1;
+            }
+        }
+
+        
 
     </script>
 </head>
 
 <body>
-
+    <br />
+    <div class="uk-container">
+        <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center">
+            <h3 class= "uk-card-title">Wyszukiwanie lotów...</h3>
+        <p>Trwa rozpoczynanie wyszukiwania...</p><progress class="uk-progress" value="0" max="0"></progress>
+        </div>      
+    </div>
 </body>
 
 </html>
