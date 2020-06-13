@@ -160,7 +160,7 @@ namespace AeroRadar
 
 
 
-            string toFile = "var flights = JSON.parse('{ \"flights\": [";
+            string toFile = "var flights = JSON.parse('{ \"flights\": [ ";
             foreach (resultJson.Flight fl in jsResult)
             {
                 toFile += (JsonConvert.SerializeObject(fl) + ",");
