@@ -11,3 +11,14 @@ Po wprowadzeniu danych, należy kliknąć w przycisk **WYSZUKAJ** i zaczekać ki
 
 ## Uwagi
 Ze względu na zastosowane zabezpieczenia antybotowe stron przewoźników, dane przewoźnika **Wizzair** dostarczane są z około 10-sekundowym opóźnieniem, natomiast możliwość wyszukiwania lotów przewoźnika **Ryanair** jest ograniczona do kilku, po czym IP klienta jest na jakiś czas blokowane.
+
+## Przykładowe dane
+Zapytanie zwracające dwa loty - **Wizzair** i **Ryanair**
+```
+2020-07-22 [VIE] Vienna Schwechat Intl - [DTM] Dortmund Airport
+```
+
+Zapytanie zwracające lot przewoźnika **Transavia**
+```
+2020-08-25 [EIN] Eindhoven Airport - [ACE] Lanzarote Lanzarote
+```
