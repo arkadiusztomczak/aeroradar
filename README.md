@@ -22,3 +22,8 @@ Zapytanie zwracające lot przewoźnika **Transavia**:
 ```
 2020-08-25 [EIN] Eindhoven Airport - [ACE] Lanzarote Lanzarote
 ```
+
+Zapytanie zwracające dwa loty przewoźnika w jednym dniu:
+```
+2020-09-12 [EIN] Eindhoven Airport - [BCN] Barcelona Airport
+```
