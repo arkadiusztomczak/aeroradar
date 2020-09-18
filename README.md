@@ -2,6 +2,10 @@
 Webscraper - wyszukiwarka połączeń lotniczych.
 Projekt zespołowy z przedmiotu Podstawy Teleinformatyki.
 
+## Dokumentacja projektu
+Dokumentacja jest dostępna pod poniższym linkiem:
+https://drive.google.com/file/d/1Uupa-yWgEDPmncA-ckJ_JrqVQMDAgDfl/view?usp=sharing
+
 ## Opis aplikacji
 Program Aeroradar jest wyszukiwarką połączeń lotniczych pozwalającą wyszukać loty pomiędzy wskazanymi lotniskami w konkretnym dniu. Aplikacja korzysta z *oscrapowanych* danych ze stron linii **Wizzair**, **Ryanair** oraz **Transavia**, a także pobiera informacjach o kodach i nazwach lotnisk ze strony organizacji **IATA** *(iata.org)*. 
 
